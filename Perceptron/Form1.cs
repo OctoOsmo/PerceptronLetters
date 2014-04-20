@@ -19,7 +19,7 @@ namespace Perceptron
 
         private void openImages_Click(object sender, EventArgs e)
         {
-            string[] fullfilesPath = Directory.GetFiles(@"C:\Users\al\Documents\GitHub\NeurNetw\NeurNetw\bin\Debug\pic");
+            string[] fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic");
             ImagesToMatrix I2M = new ImagesToMatrix(50, 50);//ourmatrix size hardcode
             I2M.LoadFromFiles(fullfilesPath);
             pictureBoxInput.Image = I2M.GetImages()[0];

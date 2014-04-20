@@ -43,13 +43,22 @@ namespace Perceptron
         }
 
 
-
+        public float[][] getOuts()
+        {
+            float[][] temp = new float[sizeX * sizeY][];
+            for (int i = 0; i < M.Length; i++)
+            {
+                temp[i] = Matrix.toVector(M[i]);
+            }
+            return temp;
+        }
 
 
         public Image[] GetImages()
         {
             return img;
         }
+
         public Matrix[] GetMatrixarray()
         {
             return this.M;

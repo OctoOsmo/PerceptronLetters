@@ -16,6 +16,18 @@ namespace Perceptron
             //this.matrix = matrix;
         }
 
+        public Matrix(int sizeX, int sizeY)
+        {
+            this.matrix = new float[sizeX][];
+            for (int i = 0; i < sizeX; ++i)
+                this.matrix[i] = new float[sizeY];
+        }
+
+        public void setValues(float[][] matrix)
+        {
+            this.matrix = matrix;
+        }
+
         public Matrix BmpToMatrix(Bitmap bm, int sizeX, int sizeY)
         {
 
@@ -62,8 +74,29 @@ namespace Perceptron
             return temp;
         }
 
+        public static float[] add(float[] x, float[] y, char sign)
+        {
+            float[] temp = new float[x.Length];
+            for (int i = 0; i < x.Length)
+            {
+                if (sign == '+')
+                    temp[i] = x[i]+y[i];
+                else if (sign == '-')
+                    temp[i] = x[i] - y[i];
+            }
+            return temp;
+        }
 
-
+        public static float distance(float[] x, float[] y)
+        {
+            float s = 0;
+            for (int i = 0; i < x.Length; i++ )
+            {
+                s += x[i] * y[i];
+            }
+            s = (float)Math.Sqrt(Math.Abs(s));
+            return s;
+        }
 
     }
 }
