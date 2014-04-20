@@ -10,7 +10,7 @@ namespace Perceptron
 
     class Matrix
     {
-        float[][] matrix;
+        public float[][] matrix;
         public Matrix()
         {
             //this.matrix = matrix;
@@ -30,6 +30,40 @@ namespace Perceptron
             this.matrix = Input;
             return m;
         }
+
+        public static float[] mult(float[] x, Matrix A)
+        {
+            float s;
+            float[] temp = new float[A.matrix.GetLength(0)];
+            for (int i = 0; i < A.matrix.GetLength(0); ++i)
+            {
+                s = 0;
+                for (int j = 0; j < A.matrix.GetLength(1); ++j)
+                {
+                    s += x[j] * A.matrix[i][j];
+                }
+                temp[i] = s;
+            }
+            return temp;
+        }
+
+        public static float[] toVector(Matrix A)
+        {
+            int n = 0;
+            float[] temp = new float[A.matrix.GetLength(0) * A.matrix.GetLength(1)];
+            for (int i = 0; i < A.matrix.GetLength(0); ++i)
+            {
+                for (int j = 0; j < A.matrix.GetLength(1); ++j)
+                {
+                    temp[n] = A.matrix[i][j];
+                    n++;
+                }
+            }
+            return temp;
+        }
+
+
+
 
     }
 }

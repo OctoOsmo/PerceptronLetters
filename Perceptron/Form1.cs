@@ -25,15 +25,15 @@ namespace Perceptron
             pictureBoxInput.Image = I2M.GetImages()[0];
             pictureBoxInput.Refresh();
             //debug
-            //Bitmap bm = new Bitmap(50, 50);
-            //pictureBoxInput.
-            Graphics g = Graphics.FromImage(pictureBoxInput.Image);
+            Bitmap bm = new Bitmap(50, 50);
             for (int i = 0; i < 50; ++i)
                 for (int j = 0; j < 50; ++j)
                 {
-                    g.FillRectangle(new SolidBrush(Color.Black), i, j, 1, 1);
+                    if (I2M.GetMatrixarray()[0].matrix[i][j] == 1)
+                        bm.SetPixel(i, j, Color.Black);
                 }
-            //debug            
+            pictureBoxInput.Image = bm;
+            //debug
             pictureBoxInput.Refresh();
         }
     }
