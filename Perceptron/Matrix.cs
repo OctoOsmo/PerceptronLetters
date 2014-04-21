@@ -46,13 +46,14 @@ namespace Perceptron
         public static float[] mult(float[] x, Matrix A)
         {
             float s;
-            float[] temp = new float[A.matrix.GetLength(0)];
-            for (int i = 0; i < A.matrix.GetLength(0); ++i)
+            int maxY = A.matrix[0].Length;
+            float[] temp = new float[maxY];
+            for (int i = 0; i < maxY; ++i)
             {
                 s = 0;
-                for (int j = 0; j < A.matrix.GetLength(1); ++j)
+                for (int j = 0; j < A.matrix.GetLength(0); ++j)
                 {
-                    s += x[j] * A.matrix[i][j];
+                    s += x[j] * A.matrix[j][i];
                 }
                 temp[i] = s;
             }
@@ -62,10 +63,12 @@ namespace Perceptron
         public static float[] toVector(Matrix A)
         {
             int n = 0;
-            float[] temp = new float[A.matrix.GetLength(0) * A.matrix.GetLength(1)];
-            for (int i = 0; i < A.matrix.GetLength(0); ++i)
+           int  x = A.matrix.GetLength(0);
+           int y = A.matrix[0].Length; 
+            float[] temp = new float[x*y];
+            for (int i = 0; i < x; ++i)
             {
-                for (int j = 0; j < A.matrix.GetLength(1); ++j)
+                for (int j = 0; j < y; ++j)
                 {
                     temp[n] = A.matrix[i][j];
                     n++;
@@ -77,10 +80,10 @@ namespace Perceptron
         public static float[] add(float[] x, float[] y, char sign)
         {
             float[] temp = new float[x.Length];
-            for (int i = 0; i < x.Length)
+            for (int i = 0; i < x.Length; i++)
             {
                 if (sign == '+')
-                    temp[i] = x[i]+y[i];
+                    temp[i] = x[i] + y[i];
                 else if (sign == '-')
                     temp[i] = x[i] - y[i];
             }

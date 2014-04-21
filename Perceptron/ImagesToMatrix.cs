@@ -45,7 +45,7 @@ namespace Perceptron
 
         public float[][] getOuts()
         {
-            float[][] temp = new float[sizeX * sizeY][];
+            float[][] temp = new float[M.Length][];
             for (int i = 0; i < M.Length; i++)
             {
                 temp[i] = Matrix.toVector(M[i]);
@@ -53,6 +53,10 @@ namespace Perceptron
             return temp;
         }
 
+        public string[] getfilenames()
+        {
+            return this.fullfilesPath;
+        }
 
         public Image[] GetImages()
         {

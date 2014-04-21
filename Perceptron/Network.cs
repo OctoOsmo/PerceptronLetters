@@ -11,15 +11,17 @@ namespace Perceptron
     class Network
     {
         Matrix weights;
-        float trainSpeed;
+        float trainSpeed = 1;
         int inputSize;
         int neurCnt;
+        List<Correspondance> correspondances;
 
         public Network(int inputSize, int neurCnt)
         {
             this.inputSize = inputSize;
             this.neurCnt = neurCnt;
             this.weights = new Matrix(inputSize, neurCnt);
+            this.correspondances = new List<Correspondance>();
         }
 
         public void setTrainSpeed(float speed)
@@ -96,17 +98,31 @@ namespace Perceptron
             {
                 for (int j = 0; j < neurCnt; j++)
                 {
-                    z[i][j] = z[i][j] - trainSpeed*err[i]*input[j];
+                    z[i][j] = z[i][j] - trainSpeed*err[j]*input[i];
                 }
             }
 
             this.weights.setValues(z);
         }
 
-        //So tired, hasn't finished this shit yet...
-        public void train(float[][] samples) // samples : float[samplesCnt][inputsCnt]
+        public void resetWeights()
         {
-            float[][] outputs = this.loadOutputs("outs.txt", 3);  //Attention: hardcode!
+            for (int i = 0; i < inputSize; i++)
+                for (int j = 0; j < neurCnt; j++)
+                    weights.matrix[i][j] = 0;
+        }
+
+        public string getSampleName(float[] sample)
+        {
+            Predicate<Correspondance> pr = c => c.sample.Equals(sample);
+            return correspondances.Find(pr).filename;
+        }
+
+
+        //So tired, hasn't finished this shit yet...
+        public void train(float[][] samples, string[] filenames) // samples : float[samplesCnt][inputsCnt]
+        {
+            float[][] outputs = this.loadOutputs("outs.txt", 4);  //Attention: hardcode!
             float[] output = new float[neurCnt];
             float[] err = new float[neurCnt];
             double eps = 0.00001;
@@ -115,17 +131,31 @@ namespace Perceptron
             while ((!complete))
             {
                 changesCnt = 0;
+                correspondances.Clear();
                 for (int i = 0; i < samples.GetLength(0); i++)
                 {
                     output = Matrix.mult(samples[i], weights);
                     err = Matrix.add(outputs[i], output, '-');
                     if (Matrix.distance(err, err) > eps)
                     {
-                        this.correctWeights(err, samples[i];
+                        this.correctWeights(err, samples[i]);
                         changesCnt++;
                     }
+                    else
+                    {
+                        correspondances.Add(new Correspondance(filenames[i], output));
+                    }
                 }
+                complete = changesCnt == 0;
             }
         }
+
+        public string recognize(float[] input)
+        {
+            float[] outp = new float[neurCnt];
+            outp = Matrix.mult(input, weights);
+            return getSampleName(outp);
+        }
+
     }
 }

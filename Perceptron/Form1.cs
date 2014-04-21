@@ -12,9 +12,19 @@ namespace Perceptron
 {
     public partial class MainForm : Form
     {
+        Network network;
+        int inputsCnt = 2500;
+        int neurCnt = 5;
+        Boolean draw;
+
         public MainForm()
         {
             InitializeComponent();
+            Bitmap bm = new Bitmap(pictureBoxInput.Height, pictureBoxInput.Width);
+            Graphics g = Graphics.FromImage(bm);
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, bm.Width, bm.Height);
+            pictureBoxInput.Image = bm;
+
         }
 
         private void openImages_Click(object sender, EventArgs e)
@@ -32,9 +42,43 @@ namespace Perceptron
                     if (I2M.GetMatrixarray()[0].matrix[i][j] == 1)
                         bm.SetPixel(i, j, Color.Black);
                 }
+           
             pictureBoxInput.Image = bm;
             //debug
             pictureBoxInput.Refresh();
+        }
+
+        private void TrainNetw_Click(object sender, EventArgs e)
+        {
+            string[] fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic");
+            ImagesToMatrix I2M = new ImagesToMatrix(50, 50);//ourmatrix size hardcode
+            I2M.LoadFromFiles(fullfilesPath);
+            this.network = new Network(inputsCnt, neurCnt);
+            network.train(I2M.getOuts(), I2M.getfilenames());
+        }
+
+        Graphics g;
+
+        private void pictureBoxInput_MouseDown(object sender, MouseEventArgs e)
+        {
+            draw = true;
+            g = Graphics.FromImage(pictureBoxInput.Image);
+            g.FillEllipse(new SolidBrush(Color.Black), e.X, e.Y, 2, 2);
+            pictureBoxInput.Refresh();
+        }
+
+        private void pictureBoxInput_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (draw)
+            {
+                g.FillRectangle(new SolidBrush(Color.Black), e.X, e.Y, 5, 5);
+                pictureBoxInput.Refresh();
+            }
+        }
+
+        private void pictureBoxInput_MouseUp(object sender, MouseEventArgs e)
+        {
+            draw = false;
         }
     }
 }
