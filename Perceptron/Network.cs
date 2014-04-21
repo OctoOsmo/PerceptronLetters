@@ -121,7 +121,7 @@ namespace Perceptron
                     err = Matrix.add(outputs[i], output, '-');
                     if (Matrix.distance(err, err) > eps)
                     {
-                        this.correctWeights(err, samples[i];
+                        this.correctWeights(err, samples[i]);
                         changesCnt++;
                     }
                 }

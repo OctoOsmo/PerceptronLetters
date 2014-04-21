@@ -77,10 +77,10 @@ namespace Perceptron
         public static float[] add(float[] x, float[] y, char sign)
         {
             float[] temp = new float[x.Length];
-            for (int i = 0; i < x.Length)
+            for (int i = 0; i < x.Length; ++i)
             {
                 if (sign == '+')
-                    temp[i] = x[i]+y[i];
+                    temp[i] = x[i] + y[i];
                 else if (sign == '-')
                     temp[i] = x[i] - y[i];
             }
@@ -90,7 +90,7 @@ namespace Perceptron
         public static float distance(float[] x, float[] y)
         {
             float s = 0;
-            for (int i = 0; i < x.Length; i++ )
+            for (int i = 0; i < x.Length; i++)
             {
                 s += x[i] * y[i];
             }
