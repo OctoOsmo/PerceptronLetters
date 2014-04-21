@@ -13,7 +13,7 @@ namespace Perceptron
     public partial class MainForm : Form
     {
         Network network;
-        int inputsCnt = 2500;
+        int inputsCnt = 400;
         int neurCnt = 5;
         Boolean draw;
 
@@ -45,14 +45,10 @@ namespace Perceptron
                         //for (int w = i * bm.Width / 50; w < (i + 1) * bm.Width / 50; ++w)
                         //    for (int h = j * bm.Height / 50; h < (j + 1) * bm.Height / 50; ++h)
                         //        bm.SetPixel(w, h, Color.Black);
-                        bm.SetPixel(i*4, j*4, Color.Black);
+                        bm.SetPixel(i * 4, j * 4, Color.Black);
                     }
                 }
-<<<<<<< HEAD
-           
-=======
             }
->>>>>>> 943b94963acb23ba30208c097e36f92b7b9530eb
             pictureBoxInput.Image = bm;
             //end of debug
             pictureBoxInput.Refresh();
@@ -61,9 +57,14 @@ namespace Perceptron
         private void TrainNetw_Click(object sender, EventArgs e)
         {
             string[] fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic");
-            ImagesToMatrix I2M = new ImagesToMatrix(50, 50);//ourmatrix size hardcode
+            ImagesToMatrix I2M = new ImagesToMatrix(20, 20);//ourmatrix size hardcode
             I2M.LoadFromFiles(fullfilesPath);
             this.network = new Network(inputsCnt, neurCnt);
+            network.train(I2M.getOuts(), I2M.getfilenames());
+            fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic1");
+            
+            I2M.LoadFromFiles(fullfilesPath);
+            
             network.train(I2M.getOuts(), I2M.getfilenames());
         }
 
@@ -73,7 +74,7 @@ namespace Perceptron
         {
             draw = true;
             g = Graphics.FromImage(pictureBoxInput.Image);
-            g.FillEllipse(new SolidBrush(Color.Black), e.X, e.Y, 2, 2);
+            g.FillEllipse(new SolidBrush(Color.Black), e.X, e.Y, 6, 6);
             pictureBoxInput.Refresh();
         }
 
@@ -81,7 +82,7 @@ namespace Perceptron
         {
             if (draw)
             {
-                g.FillRectangle(new SolidBrush(Color.Black), e.X, e.Y, 5, 5);
+                g.FillRectangle(new SolidBrush(Color.Black), e.X, e.Y, 6, 6);
                 pictureBoxInput.Refresh();
             }
         }
@@ -93,7 +94,7 @@ namespace Perceptron
 
         private void Recognize_Click(object sender, EventArgs e)
         {
-            ImagesToMatrix I2M = new ImagesToMatrix(50, 50);
+            ImagesToMatrix I2M = new ImagesToMatrix(20, 20);
 
             float[] x = I2M.LoadFromImage(pictureBoxInput.Image);
             string str = network.recognize(x);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using System.Threading.Tasks;
 
 namespace Perceptron
@@ -15,13 +16,14 @@ namespace Perceptron
         int inputSize;
         int neurCnt;
         List<Correspondance> correspondances;
-        int maxIter = 2;
+        int maxIter = 100000;
 
         public Network(int inputSize, int neurCnt)
         {
             this.inputSize = inputSize;
             this.neurCnt = neurCnt;
             this.weights = new Matrix(inputSize, neurCnt);
+            this.initWeights();
             this.correspondances = new List<Correspondance>();
         }
 
@@ -92,17 +94,14 @@ namespace Perceptron
         //delta-rule
         private void correctWeights(float[] err, float[] input)
         {
-            float[][] z = new float[inputSize][];
-            for (int i = 0; i < inputSize; i++)
-                z[i] = new float[neurCnt];
+            float[][] z = weights.matrix;
             for (int i = 0; i < inputSize; i++)
             {
                 for (int j = 0; j < neurCnt; j++)
                 {
-                    z[i][j] = z[i][j] + trainSpeed*err[j]*input[i];
+                    z[i][j] = z[i][j] + trainSpeed * err[j] * input[i];
                 }
             }
-
             this.weights.setValues(z);
         }
 
@@ -111,6 +110,14 @@ namespace Perceptron
             for (int i = 0; i < inputSize; i++)
                 for (int j = 0; j < neurCnt; j++)
                     weights.matrix[i][j] = 0;
+        }
+
+        public void initWeights()
+        {
+            Random r = new Random(); 
+            for (int i = 0; i < inputSize; i++)
+                for (int j = 0; j < neurCnt; j++)
+                    weights.matrix[i][j] = (float)r.NextDouble();
         }
 
         float[] porog(float[] net)
@@ -133,10 +140,11 @@ namespace Perceptron
 
         public void train(float[][] samples, string[] filenames) // samples : float[samplesCnt][inputsCnt]
         {
-            float[][] outputs = this.loadOutputs("outs.txt", 4);  //Attention: hardcode!
+            float[][] outputs = this.loadOutputs("outs.txt", 26);  //Attention: hardcode!
             float[] output = new float[neurCnt];
             float[] err = new float[neurCnt];
             double eps = 0.00001;
+            
             Boolean complete = false;
             int changesCnt;
             int n = 0;
@@ -146,11 +154,12 @@ namespace Perceptron
                 correspondances.Clear();
                 for (int i = 0; i < samples.GetLength(0); i++)
                 {
-                    output = porog(Matrix.mult(samples[i], weights));
+                    output = porog(Matrix.mult(samples[i], this.weights));
                     err = Matrix.add(outputs[i], output, '-');
                     if (Matrix.distance(err, err) > eps)
                     {
                         this.correctWeights(err, samples[i]);
+                        Console.WriteLine();  
                         changesCnt++;
                         if (n == maxIter) correspondances.Add(new Correspondance(filenames[i], output));
                     }
@@ -160,26 +169,25 @@ namespace Perceptron
                     }
                 }
                 n++;
-                complete = (changesCnt == 0)||(n > maxIter);
+                complete = (changesCnt == 0) || (n > maxIter);
+                if (changesCnt == 0) MessageBox.Show("success");
             }
         }
 
         public string recognize(float[] input)
         {
             float[] outp = new float[neurCnt];
-            outp = porog(Matrix.mult(input, weights));
-            return getSampleName(outp);
+            outp = porog(Matrix.mult(input, this.weights));
+            try
+            {
+                return getSampleName(outp);
+            }
+            catch (NullReferenceException ex)
+            {
+                return "smile.bmp";
+            }
         }
 
-        float[] porog(float[] net)
-        {
-            float[] temp = new float[net.Length];
-            for (int i = 0; i < net.Length; i++)
-            {
-                if (net[i] >= 0) temp[i] = 1;
-                else temp[i] = 0;
-            }
-            return temp;
-        }
+
     }
 }

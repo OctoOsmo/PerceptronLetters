@@ -101,15 +101,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
-            this.ClientSize = new System.Drawing.Size(428, 261);
-=======
-            this.ClientSize = new System.Drawing.Size(642, 264);
+            this.ClientSize = new System.Drawing.Size(688, 263);
             this.Controls.Add(this.Clear);
             this.Controls.Add(this.Recognize);
             this.Controls.Add(this.TrainNetw);
             this.Controls.Add(this.pictureBoxOutput);
->>>>>>> 9dc9bed6474e7ef75d54d31609dc1aa4fb64cbc1
             this.Controls.Add(this.openImages);
             this.Controls.Add(this.pictureBoxInput);
             this.Name = "MainForm";

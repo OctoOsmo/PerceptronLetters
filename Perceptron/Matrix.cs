@@ -43,6 +43,8 @@ namespace Perceptron
             return m;
         }
 
+
+
         public static float[] mult(float[] x, Matrix A)
         {
             float s;
@@ -80,11 +82,7 @@ namespace Perceptron
         public static float[] add(float[] x, float[] y, char sign)
         {
             float[] temp = new float[x.Length];
-<<<<<<< HEAD
-            for (int i = 0; i < x.Length; i++)
-=======
             for (int i = 0; i < x.Length; ++i)
->>>>>>> 943b94963acb23ba30208c097e36f92b7b9530eb
             {
                 if (sign == '+')
                     temp[i] = x[i] + y[i];
