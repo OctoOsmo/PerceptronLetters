@@ -8,6 +8,13 @@ namespace Perceptron
 {
     class Correspondance
     {
+        public string filename;
+        public float[] sample;
 
+        public Correspondance(string filename, float[] sample)
+        {
+            this.filename = filename;
+            this.sample = sample;
+        }
     }
 }
