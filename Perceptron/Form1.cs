@@ -30,12 +30,12 @@ namespace Perceptron
             {
                 for (int j = 0; j < 50; ++j)
                 {
-                    if (I2M.GetMatrixarray()[0].matrix[i][j] == 1)
+                    if (I2M.GetMatrixarray()[0].matrix[i][j] == 0)
                     {
                         //for (int w = i * bm.Width / 50; w < (i + 1) * bm.Width / 50; ++w)
                         //    for (int h = j * bm.Height / 50; h < (j + 1) * bm.Height / 50; ++h)
-                                //bm.SetPixel(w, h, Color.Black);
-                        bm.SetPixel(i, j, Color.Black);
+                        //        bm.SetPixel(w, h, Color.Black);
+                        bm.SetPixel(i*4, j*4, Color.Black);
                     }
                 }
             }
