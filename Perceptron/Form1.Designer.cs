@@ -33,6 +33,7 @@
             this.pictureBoxOutput = new System.Windows.Forms.PictureBox();
             this.TrainNetw = new System.Windows.Forms.Button();
             this.Recognize = new System.Windows.Forms.Button();
+            this.Clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOutput)).BeginInit();
             this.SuspendLayout();
@@ -84,12 +85,24 @@
             this.Recognize.TabIndex = 4;
             this.Recognize.Text = "Recognize";
             this.Recognize.UseVisualStyleBackColor = true;
+            this.Recognize.Click += new System.EventHandler(this.Recognize_Click);
+            // 
+            // Clear
+            // 
+            this.Clear.Location = new System.Drawing.Point(263, 203);
+            this.Clear.Name = "Clear";
+            this.Clear.Size = new System.Drawing.Size(90, 23);
+            this.Clear.TabIndex = 5;
+            this.Clear.Text = "Clear";
+            this.Clear.UseVisualStyleBackColor = true;
+            this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 264);
+            this.Controls.Add(this.Clear);
             this.Controls.Add(this.Recognize);
             this.Controls.Add(this.TrainNetw);
             this.Controls.Add(this.pictureBoxOutput);
@@ -110,6 +123,7 @@
         private System.Windows.Forms.PictureBox pictureBoxOutput;
         private System.Windows.Forms.Button TrainNetw;
         private System.Windows.Forms.Button Recognize;
+        private System.Windows.Forms.Button Clear;
     }
 }
 

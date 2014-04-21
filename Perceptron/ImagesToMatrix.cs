@@ -42,6 +42,13 @@ namespace Perceptron
             return 0;
         }
 
+        public float[] LoadFromImage(Image image)
+        {
+            Bitmap bm = new Bitmap(image);
+            Matrix m = new Matrix();
+            m.BmpToMatrix(bm, this.sizeX, this.sizeY);
+            return Matrix.toVector(m);
+        }
 
         public float[][] getOuts()
         {

@@ -80,5 +80,24 @@ namespace Perceptron
         {
             draw = false;
         }
+
+        private void Recognize_Click(object sender, EventArgs e)
+        {
+            ImagesToMatrix I2M = new ImagesToMatrix(50, 50);
+
+            float[] x = I2M.LoadFromImage(pictureBoxInput.Image);
+            string str = network.recognize(x);
+            pictureBoxOutput.Image = Image.FromFile(str);
+            pictureBoxOutput.Refresh();
+        }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            Graphics g = Graphics.FromImage(pictureBoxInput.Image);
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBoxInput.Image.Width, pictureBoxInput.Image.Height);
+            g.Dispose();
+            pictureBoxInput.Refresh();
+
+        }
     }
 }

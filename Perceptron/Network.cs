@@ -15,6 +15,7 @@ namespace Perceptron
         int inputSize;
         int neurCnt;
         List<Correspondance> correspondances;
+        int maxIter = 2;
 
         public Network(int inputSize, int neurCnt)
         {
@@ -98,7 +99,7 @@ namespace Perceptron
             {
                 for (int j = 0; j < neurCnt; j++)
                 {
-                    z[i][j] = z[i][j] - trainSpeed*err[j]*input[i];
+                    z[i][j] = z[i][j] + trainSpeed*err[j]*input[i];
                 }
             }
 
@@ -112,14 +113,24 @@ namespace Perceptron
                     weights.matrix[i][j] = 0;
         }
 
+        float[] porog(float[] net)
+        {
+            float[] temp = new float[net.Length];
+            for (int i = 0; i < net.Length; i++)
+            {
+                if (net[i] >= 0) temp[i] = 1;
+                else temp[i] = 0;
+            }
+            return temp;
+        }
+
         public string getSampleName(float[] sample)
         {
-            Predicate<Correspondance> pr = c => c.sample.Equals(sample);
+            Predicate<Correspondance> pr = c => c.sample.SequenceEqual(sample);
             return correspondances.Find(pr).filename;
         }
 
 
-        //So tired, hasn't finished this shit yet...
         public void train(float[][] samples, string[] filenames) // samples : float[samplesCnt][inputsCnt]
         {
             float[][] outputs = this.loadOutputs("outs.txt", 4);  //Attention: hardcode!
@@ -128,34 +139,47 @@ namespace Perceptron
             double eps = 0.00001;
             Boolean complete = false;
             int changesCnt;
+            int n = 0;
             while ((!complete))
             {
                 changesCnt = 0;
                 correspondances.Clear();
                 for (int i = 0; i < samples.GetLength(0); i++)
                 {
-                    output = Matrix.mult(samples[i], weights);
+                    output = porog(Matrix.mult(samples[i], weights));
                     err = Matrix.add(outputs[i], output, '-');
                     if (Matrix.distance(err, err) > eps)
                     {
                         this.correctWeights(err, samples[i]);
                         changesCnt++;
+                        if (n == maxIter) correspondances.Add(new Correspondance(filenames[i], output));
                     }
                     else
                     {
                         correspondances.Add(new Correspondance(filenames[i], output));
                     }
                 }
-                complete = changesCnt == 0;
+                n++;
+                complete = (changesCnt == 0)||(n > maxIter);
             }
         }
 
         public string recognize(float[] input)
         {
             float[] outp = new float[neurCnt];
-            outp = Matrix.mult(input, weights);
+            outp = porog(Matrix.mult(input, weights));
             return getSampleName(outp);
         }
 
+        float[] porog(float[] net)
+        {
+            float[] temp = new float[net.Length];
+            for (int i = 0; i < net.Length; i++)
+            {
+                if (net[i] >= 0) temp[i] = 1;
+                else temp[i] = 0;
+            }
+            return temp;
+        }
     }
 }
