@@ -15,7 +15,9 @@ namespace Perceptron
         Network network;
         int inputsCnt = 400;
         int neurCnt = 5;
+        int partCnt = 20;
         Boolean draw;
+        string picturepath = @"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic";
 
         public MainForm()
         {
@@ -30,7 +32,7 @@ namespace Perceptron
         private void openImages_Click(object sender, EventArgs e)
         {
             string[] fullfilesPath = Directory.GetFiles(@".\pic");
-            ImagesToMatrix I2M = new ImagesToMatrix(50, 50);//ourmatrix size hardcode
+            ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);//ourmatrix size hardcode
             I2M.LoadFromFiles(fullfilesPath);
             pictureBoxInput.Image = I2M.GetImages()[0];
             pictureBoxInput.Refresh();
@@ -56,15 +58,10 @@ namespace Perceptron
 
         private void TrainNetw_Click(object sender, EventArgs e)
         {
-            string[] fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic");
-            ImagesToMatrix I2M = new ImagesToMatrix(20, 20);//ourmatrix size hardcode
+            string[] fullfilesPath = Directory.GetFiles(picturepath);
+            ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);
             I2M.LoadFromFiles(fullfilesPath);
             this.network = new Network(inputsCnt, neurCnt);
-            network.train(I2M.getOuts(), I2M.getfilenames());
-            fullfilesPath = Directory.GetFiles(@"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic1");
-            
-            I2M.LoadFromFiles(fullfilesPath);
-            
             network.train(I2M.getOuts(), I2M.getfilenames());
         }
 

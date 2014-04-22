@@ -34,11 +34,15 @@ namespace Perceptron
             float[][] Input = new float[sizeX][];
             for (int i = 0; i < sizeX; ++i)
                 Input[i] = new float[sizeY];
+
+            int scaleX = bm.Width / sizeX;
+            int scaleY = bm.Height / sizeY;
+
             Matrix m = new Matrix();
             for (int i = 0; i < bm.Width; ++i)
                 for (int j = 0; j < bm.Height; ++j)
                     if (bm.GetPixel(i, j).ToArgb() == Color.Black.ToArgb())
-                        Input[i / sizeX][j / sizeY] = 1;
+                        Input[i / scaleX][j / scaleY] = 1;
             this.matrix = Input;
             return m;
         }
