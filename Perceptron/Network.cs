@@ -76,6 +76,7 @@ namespace Perceptron
             return z;
         }
 
+
         public void saveWeights(string filename)
         {
             StreamWriter sw = File.CreateText(filename);

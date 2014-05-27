@@ -34,6 +34,8 @@
             this.TrainNetw = new System.Windows.Forms.Button();
             this.Recognize = new System.Windows.Forms.Button();
             this.Clear = new System.Windows.Forms.Button();
+            this.PersBtn = new System.Windows.Forms.RadioButton();
+            this.Hopf = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOutput)).BeginInit();
             this.SuspendLayout();
@@ -97,11 +99,35 @@
             this.Clear.UseVisualStyleBackColor = true;
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
+            // PersBtn
+            // 
+            this.PersBtn.AutoSize = true;
+            this.PersBtn.Location = new System.Drawing.Point(227, 25);
+            this.PersBtn.Name = "PersBtn";
+            this.PersBtn.Size = new System.Drawing.Size(77, 17);
+            this.PersBtn.TabIndex = 6;
+            this.PersBtn.TabStop = true;
+            this.PersBtn.Text = "Perceptron";
+            this.PersBtn.UseVisualStyleBackColor = true;
+            // 
+            // Hopf
+            // 
+            this.Hopf.AutoSize = true;
+            this.Hopf.Location = new System.Drawing.Point(318, 26);
+            this.Hopf.Name = "Hopf";
+            this.Hopf.Size = new System.Drawing.Size(64, 17);
+            this.Hopf.TabIndex = 7;
+            this.Hopf.TabStop = true;
+            this.Hopf.Text = "Hopfield";
+            this.Hopf.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(688, 263);
+            this.Controls.Add(this.Hopf);
+            this.Controls.Add(this.PersBtn);
             this.Controls.Add(this.Clear);
             this.Controls.Add(this.Recognize);
             this.Controls.Add(this.TrainNetw);
@@ -113,6 +139,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOutput)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -124,6 +151,8 @@
         private System.Windows.Forms.Button TrainNetw;
         private System.Windows.Forms.Button Recognize;
         private System.Windows.Forms.Button Clear;
+        private System.Windows.Forms.RadioButton PersBtn;
+        private System.Windows.Forms.RadioButton Hopf;
     }
 }
 

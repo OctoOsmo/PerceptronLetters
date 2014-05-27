@@ -13,11 +13,12 @@ namespace Perceptron
     public partial class MainForm : Form
     {
         Network network;
+        Hopfield hopfield;
         int inputsCnt = 400;
-        int neurCnt = 5;
+        int neurCnt = 400;
         int partCnt = 20;
         Boolean draw;
-        string picturepath = @"C:\Users\Svetlana\Documents\Visual Studio 2012\Projects\PerceptronLetters-master\Perceptron\bin\Debug\pic";
+        string picturepath = @"C:\Users\al\Documents\GitHub\PerceptronLetters\1";
 
         public MainForm()
         {
@@ -31,7 +32,7 @@ namespace Perceptron
 
         private void openImages_Click(object sender, EventArgs e)
         {
-            string[] fullfilesPath = Directory.GetFiles(@".\pic");
+            string[] fullfilesPath = Directory.GetFiles(@".\1");
             ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);//ourmatrix size hardcode
             I2M.LoadFromFiles(fullfilesPath);
             pictureBoxInput.Image = I2M.GetImages()[0];
@@ -61,8 +62,17 @@ namespace Perceptron
             string[] fullfilesPath = Directory.GetFiles(picturepath);
             ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);
             I2M.LoadFromFiles(fullfilesPath);
-            this.network = new Network(inputsCnt, neurCnt);
-            network.train(I2M.getOuts(), I2M.getfilenames());
+            if (PersBtn.Checked)
+            {
+                this.network = new Network(inputsCnt, neurCnt);
+                network.train(I2M.getOuts(), I2M.getfilenames());
+            }
+            else
+            {
+                this.hopfield = new Hopfield(inputsCnt, neurCnt);
+                hopfield.train(I2M.getOuts());
+            }
+
         }
 
         Graphics g;
@@ -91,11 +101,46 @@ namespace Perceptron
 
         private void Recognize_Click(object sender, EventArgs e)
         {
-            ImagesToMatrix I2M = new ImagesToMatrix(20, 20);
+            if (PersBtn.Checked)
+            {
+                perceptronRecognize();
+            }
+            else
+            {
+                ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);
+                float[] x = I2M.LoadFromImage(pictureBoxInput.Image);
+                Matrix.print(x);
+                hopfield.recognize(x);
+                hopfieldDraw(hopfield.outs);
+            }
 
+        }
+
+
+
+        private void perceptronRecognize()
+        {
+            ImagesToMatrix I2M = new ImagesToMatrix(partCnt, partCnt);
             float[] x = I2M.LoadFromImage(pictureBoxInput.Image);
             string str = network.recognize(x);
             pictureBoxOutput.Image = Image.FromFile(str);
+            pictureBoxOutput.Refresh();
+
+        }
+
+        private void hopfieldDraw(float[] output)
+        {
+            Bitmap bm = new Bitmap(200, 200);
+            pictureBoxOutput.Image = bm;
+            int scaleX = bm.Width / partCnt;
+            int scaleY = bm.Height / partCnt;
+            Graphics g = Graphics.FromImage(bm);
+
+            for (int i = 0; i < partCnt*partCnt; i++)                
+                    if ((int)output[i] == 1)
+                    {
+                        g.FillRectangle(new SolidBrush(Color.Black),  (i / partCnt)*scaleX, (i % partCnt)*scaleY, scaleX, scaleY);
+                    }
             pictureBoxOutput.Refresh();
         }
 
