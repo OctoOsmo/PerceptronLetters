@@ -16,8 +16,11 @@ namespace Perceptron
         Hopfield hopfield;
         int inputsCnt = 400;
         int neurCnt = 400;
+        int perNeurCount = 5;
         int partCnt = 20;
         Boolean draw;
+        int xPos, yPos;
+        Pen blackPen = new Pen(Color.Black, 0);
         string picturepath = @"C:\Users\al\Documents\GitHub\PerceptronLetters\1";
 
         public MainForm()
@@ -27,7 +30,10 @@ namespace Perceptron
             Graphics g = Graphics.FromImage(bm);
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, bm.Width, bm.Height);
             pictureBoxInput.Image = bm;
-
+            trackBarBrushSize.Minimum = 1;
+            trackBarBrushSize.Maximum = 50;
+            trackBarBrushSize.Value = 15;
+            blackPen.Width = trackBarBrushSize.Value;
         }
 
         private void openImages_Click(object sender, EventArgs e)
@@ -64,7 +70,7 @@ namespace Perceptron
             I2M.LoadFromFiles(fullfilesPath);
             if (PersBtn.Checked)
             {
-                this.network = new Network(inputsCnt, neurCnt);
+                this.network = new Network(inputsCnt, perNeurCount);
                 network.train(I2M.getOuts(), I2M.getfilenames());
             }
             else
@@ -80,8 +86,13 @@ namespace Perceptron
         private void pictureBoxInput_MouseDown(object sender, MouseEventArgs e)
         {
             draw = true;
-            g = Graphics.FromImage(pictureBoxInput.Image);
-            g.FillEllipse(new SolidBrush(Color.Black), e.X, e.Y, 6, 6);
+            int size = trackBarBrushSize.Value;
+            g = Graphics.FromImage(pictureBoxInput.Image);            
+            g.FillEllipse(new SolidBrush(Color.Black), e.X - size / 2, e.Y - size / 2, size, size);
+            Point to = new Point(e.X, e.Y);
+            blackPen.Width = trackBarBrushSize.Value;  
+            this.xPos = e.X;
+            this.yPos = e.Y;
             pictureBoxInput.Refresh();
         }
 
@@ -89,7 +100,16 @@ namespace Perceptron
         {
             if (draw)
             {
-                g.FillRectangle(new SolidBrush(Color.Black), e.X, e.Y, 6, 6);
+                int size = trackBarBrushSize.Value;
+                Point from = new Point(this.xPos, this.yPos);
+                Point to = new Point(e.X, e.Y);
+                Point[] points = { from, to };
+                //g.DrawCurve(this.blackPen, points);
+                g.FillEllipse(new SolidBrush(Color.Black), e.X - size / 2, e.Y - size / 2, size, size);
+                blackPen.Width = trackBarBrushSize.Value;
+                g.DrawLine(this.blackPen, from, to);
+                this.xPos = e.X;
+                this.yPos = e.Y;
                 pictureBoxInput.Refresh();
             }
         }
@@ -150,6 +170,11 @@ namespace Perceptron
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBoxInput.Image.Width, pictureBoxInput.Image.Height);
             g.Dispose();
             pictureBoxInput.Refresh();
+
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
 
         }
     }

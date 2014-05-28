@@ -21,7 +21,7 @@ namespace Perceptron
         public Network(int inputSize, int neurCnt)
         {
             this.inputSize = inputSize;
-            this.neurCnt = neurCnt;
+            this.neurCnt = 5;//neurCnt;
             this.weights = new Matrix(inputSize, neurCnt);
             this.initWeights();
             this.correspondances = new List<Correspondance>();
@@ -185,7 +185,7 @@ namespace Perceptron
             }
             catch (NullReferenceException ex)
             {
-                return "smile.bmp";
+                return @"C:\Users\al\Documents\GitHub\PerceptronLetters\2\smile.bmp";
             }
         }
 

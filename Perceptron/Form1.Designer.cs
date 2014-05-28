@@ -36,8 +36,10 @@
             this.Clear = new System.Windows.Forms.Button();
             this.PersBtn = new System.Windows.Forms.RadioButton();
             this.Hopf = new System.Windows.Forms.RadioButton();
+            this.trackBarBrushSize = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOutput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrushSize)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxInput
@@ -53,7 +55,7 @@
             // 
             // openImages
             // 
-            this.openImages.Location = new System.Drawing.Point(263, 49);
+            this.openImages.Location = new System.Drawing.Point(263, 61);
             this.openImages.Name = "openImages";
             this.openImages.Size = new System.Drawing.Size(90, 23);
             this.openImages.TabIndex = 1;
@@ -63,7 +65,7 @@
             // 
             // pictureBoxOutput
             // 
-            this.pictureBoxOutput.Location = new System.Drawing.Point(430, 49);
+            this.pictureBoxOutput.Location = new System.Drawing.Point(405, 49);
             this.pictureBoxOutput.Name = "pictureBoxOutput";
             this.pictureBoxOutput.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxOutput.TabIndex = 2;
@@ -71,7 +73,7 @@
             // 
             // TrainNetw
             // 
-            this.TrainNetw.Location = new System.Drawing.Point(263, 95);
+            this.TrainNetw.Location = new System.Drawing.Point(263, 107);
             this.TrainNetw.Name = "TrainNetw";
             this.TrainNetw.Size = new System.Drawing.Size(90, 23);
             this.TrainNetw.TabIndex = 3;
@@ -81,7 +83,7 @@
             // 
             // Recognize
             // 
-            this.Recognize.Location = new System.Drawing.Point(263, 148);
+            this.Recognize.Location = new System.Drawing.Point(263, 160);
             this.Recognize.Name = "Recognize";
             this.Recognize.Size = new System.Drawing.Size(90, 23);
             this.Recognize.TabIndex = 4;
@@ -91,7 +93,7 @@
             // 
             // Clear
             // 
-            this.Clear.Location = new System.Drawing.Point(263, 203);
+            this.Clear.Location = new System.Drawing.Point(263, 215);
             this.Clear.Name = "Clear";
             this.Clear.Size = new System.Drawing.Size(90, 23);
             this.Clear.TabIndex = 5;
@@ -102,7 +104,7 @@
             // PersBtn
             // 
             this.PersBtn.AutoSize = true;
-            this.PersBtn.Location = new System.Drawing.Point(227, 25);
+            this.PersBtn.Location = new System.Drawing.Point(233, 25);
             this.PersBtn.Name = "PersBtn";
             this.PersBtn.Size = new System.Drawing.Size(77, 17);
             this.PersBtn.TabIndex = 6;
@@ -113,7 +115,7 @@
             // Hopf
             // 
             this.Hopf.AutoSize = true;
-            this.Hopf.Location = new System.Drawing.Point(318, 26);
+            this.Hopf.Location = new System.Drawing.Point(324, 26);
             this.Hopf.Name = "Hopf";
             this.Hopf.Size = new System.Drawing.Size(64, 17);
             this.Hopf.TabIndex = 7;
@@ -121,11 +123,20 @@
             this.Hopf.Text = "Hopfield";
             this.Hopf.UseVisualStyleBackColor = true;
             // 
+            // trackBarBrushSize
+            // 
+            this.trackBarBrushSize.Location = new System.Drawing.Point(12, 255);
+            this.trackBarBrushSize.Name = "trackBarBrushSize";
+            this.trackBarBrushSize.Size = new System.Drawing.Size(593, 45);
+            this.trackBarBrushSize.TabIndex = 8;
+            this.trackBarBrushSize.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 263);
+            this.ClientSize = new System.Drawing.Size(622, 303);
+            this.Controls.Add(this.trackBarBrushSize);
             this.Controls.Add(this.Hopf);
             this.Controls.Add(this.PersBtn);
             this.Controls.Add(this.Clear);
@@ -138,6 +149,7 @@
             this.Text = "Perceptron";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxOutput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrushSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,6 +165,7 @@
         private System.Windows.Forms.Button Clear;
         private System.Windows.Forms.RadioButton PersBtn;
         private System.Windows.Forms.RadioButton Hopf;
+        private System.Windows.Forms.TrackBar trackBarBrushSize;
     }
 }
 
